@@ -1,4 +1,3 @@
-# License: CC0-1.0
 version: '2'
 services:
   web:
@@ -6,32 +5,30 @@ services:
       context: ../..
       dockerfile: docker/debug/Dockerfile
       args:
-      - USER
+        - USER=${USER}
+    # Ensure the container uses the user created in Dockerfile
     user: ${USER}
 
     environment:
-    - DATABASE_HOST=db
-    - MEMCACHE_SERVERS=memcached
-    - USER=${USER}
+      - DATABASE_HOST=db
+      - MEMCACHE_SERVERS=memcached
+      - USER=${USER}
 
     volumes:
-    - ../../:/myapp
+      # Mount the code, but be careful not to overwrite the container's installed gems
+      - ../../:/myapp
 
     ports:
-    - "5000:5000"
+      - "5000:5000"
     depends_on:
-    - db
-    - memcached
+      - db
+      - memcached
+
   db:
-    image: postgres:9.6
+    image: postgres:9.6-alpine
     environment:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "password"
+
   memcached:
-    image: memcached
-
-
-
-
-
-
+    image: memcached:alpine
