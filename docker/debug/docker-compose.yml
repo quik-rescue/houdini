@@ -17,10 +17,20 @@ services:
     volumes:
       # Mount the code, but be careful not to overwrite the container's installed gems
       - ../../:/myapp
-    hosts:
-      - "0.0.0.0"
     ports:
-      - "11211:11211"
+      - "172.17.0.1:5000:5000"
+    restart: unless-stopped
+    networks: [comms_net]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:5000/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+      
+    # ports:
+    #   - "11211:11211"
     depends_on:
       - db
       - memcached
