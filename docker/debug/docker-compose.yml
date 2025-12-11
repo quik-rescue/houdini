@@ -17,9 +17,10 @@ services:
     volumes:
       # Mount the code, but be careful not to overwrite the container's installed gems
       - ../../:/myapp
-
+    hosts:
+      - "0.0.0.0"
     ports:
-      - "5000:5000"
+      - "11211:11211"
     depends_on:
       - db
       - memcached
