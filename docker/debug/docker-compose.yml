@@ -11,15 +11,10 @@ services:
     # Ensure the container uses the user created in Dockerfile
     # user: ${USER}
     environment:
-      DB_CONNECTION: postgress
-      DB_HOST: ${DB_POSTGRESDB_HOST}
-      DB_PORT: ${DB_POSTGRESDB_PORT}
-      DB_DATABASE: ${DB_POSTGRESDB_DB_NAME}
-      DB_USERNAME: ${DB_POSTGRESDB_USER}
-      DB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
-      # - DATABASE_HOST=db
+      DATABASE_URL : "postgres://${DB_POSTGRESDB_USER}:${DB_POSTGRESDB_PASSWORD}@${DB_POSTGRESDB_HOST}:${DB_POSTGRESDB_PORT}/houdini?sslmode=prefer"
+      # - DATABASE_HOST= db
       - MEMCACHE_SERVERS=memcached
-      - USER=${USER}
+      # - USER=${USER}
 
     volumes:
       # Mount the code, but be careful not to overwrite the container's installed gems
@@ -40,14 +35,7 @@ services:
     # ports:
     #   - "11211:11211"
     depends_on:
-      - db
       - memcached
-
-  db:
-    image: postgres:9.6-alpine
-    environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "password"
-
+      
   memcached:
     image: memcached:alpine
