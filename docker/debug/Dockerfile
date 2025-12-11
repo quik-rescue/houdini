@@ -3,7 +3,7 @@ FROM ruby:2.3.7-alpine
 ARG USER=appuser
 
 # 1. Install System Dependencies
-# Added 'git' to this list so Bundler can fetch gems from GitHub
+# ADDED 'git' here so Bundler can fetch gems from GitHub
 RUN apk add --no-cache \
     build-base \
     bash \
@@ -25,11 +25,11 @@ COPY gems /myapp/gems/
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 
-# Configure bundler for nokogiri optimization
+# Configure bundler to use system libraries for Nokogiri (improves build speed on Alpine)
 RUN bundle config build.nokogiri --use-system-libraries
 
-# 4. Update Bundler and Install Gems
-# Updates bundler to match your lockfile version and installs gems
+# 4. Update Bundler & Install Gems
+# We run 'gem install bundler' first to fix the version warning (1.16.6 vs 1.17.3)
 RUN gem install bundler && \
     bundle install --jobs 4 --retry 3
 
