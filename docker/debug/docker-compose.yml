@@ -4,10 +4,10 @@ services:
     build:
       context: ../..
       dockerfile: docker/debug/Dockerfile
-      args:
-        - USER=${USER}
+      #args:
+       # - USER=${USER}
     # Ensure the container uses the user created in Dockerfile
-    user: ${USER}
+    # user: ${USER}
 
     environment:
       - DATABASE_HOST=db
