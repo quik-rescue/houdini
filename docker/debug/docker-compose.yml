@@ -10,8 +10,13 @@ services:
        # - USER=${USER}
     # Ensure the container uses the user created in Dockerfile
     # user: ${USER}
-
     environment:
+      HOUDINI_DB_CONNECTION: mysql
+      HOUDINI_DB_HOST: db
+      HOUDINI_DB_PORT: 3306
+      HOUDINI_DB_DATABASE: houdini
+      HOUDINI_DB_USERNAME: root
+      HOUDINI_DB_PASSWORD: secret
       - DATABASE_HOST=db
       - MEMCACHE_SERVERS=memcached
       - USER=${USER}
