@@ -3,7 +3,7 @@ FROM ruby:2.3.7-alpine
 ARG USER=appuser
 
 # 1. Install System Dependencies
-# Added 'git' for gems that need to be fetched from repositories
+# 'git' is included to fetch gems from git repositories
 RUN apk add --no-cache \
     build-base \
     bash \
@@ -25,11 +25,11 @@ COPY gems /myapp/gems/
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 
-# Configure bundler for Nokogiri optimization
+# Configure bundler to use system libraries for Nokogiri
 RUN bundle config build.nokogiri --use-system-libraries
 
-# 4. Update Bundler & Install Gems
-# FIX: Explicitly install Bundler 1.17.3 to match your lockfile and Ruby version
+# 4. Install Specific Bundler Version & Gems
+# FIX: We specify '-v 1.17.3' to ensure compatibility with Ruby 2.3 and your lockfile
 RUN gem install bundler -v 1.17.3 && \
     bundle install --jobs 4 --retry 3
 
