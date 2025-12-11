@@ -11,12 +11,12 @@ services:
     # Ensure the container uses the user created in Dockerfile
     # user: ${USER}
     environment:
-      HOUDINI_DB_CONNECTION: postgress
-      HOUDINI_DB_HOST: ${DB_POSTGRESDB_HOST}
-      HOUDINI_DB_PORT: ${DB_POSTGRESDB_PORT}
-      HOUDINI_DB_DATABASE: ${DB_POSTGRESDB_DB_NAME}
-      HOUDINI_DB_USERNAME: ${DB_POSTGRESDB_USER}
-      HOUDINI_DB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
+      DB_CONNECTION: postgress
+      DB_HOST: ${DB_POSTGRESDB_HOST}
+      DB_PORT: ${DB_POSTGRESDB_PORT}
+      DB_DATABASE: ${DB_POSTGRESDB_DB_NAME}
+      DB_USERNAME: ${DB_POSTGRESDB_USER}
+      DB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
       # - DATABASE_HOST=db
       - MEMCACHE_SERVERS=memcached
       - USER=${USER}
